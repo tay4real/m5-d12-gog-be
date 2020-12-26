@@ -1,27 +1,31 @@
-const sgMail = require("@sendgrid/mail")
+const { SMTPClient } = require("emailjs");
 
 module.exports = async (emailAddress, attachment) => {
   try {
-    sgMail.setApiKey(process.env.SENDGRID_API_KEY) // my personal token
+    const client = new SMTPClient({
+      user: process.env.SMTP_USER,
+      password: process.env.SMTP_PASSWORD,
+      host: process.env.SMTP_HOST,
+      ssl: true,
+    });
 
-    const myFile64 = attachment.toString("base64") // nodejs knows how to translate binary files into base64 strings
     const msg = {
       to: emailAddress,
       from: process.env.SENDER_EMAIL,
-      subject: "whatever",
-      text: "whatever",
+      subject: "Testing Email JS",
+      text: "I hope this works",
       attachments: [
+        { data: "<html>i <i>hope</i> this works!</html>", alternative: true },
         {
-          content: myFile64, // file itself in the form of a base64 string
+          path: "whatever.pdf",
           type: "plain/text",
-          filename: "whatever.pdf",
-          disposition: "attachment",
+          name: "renamed.pdf",
         },
       ],
-    }
+    };
 
-    await sgMail.send(msg)
+    await client.send(msg);
   } catch (error) {
-    console.log(JSON.stringify(error))
+    console.log(JSON.stringify(error));
   }
-}
+};
