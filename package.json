@@ -17,6 +17,7 @@
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "emailjs": "^3.4.0",
+    "emailjs-com": "^2.6.4",
     "express": "^4.17.1",
     "express-list-endpoints": "^5.0.0",
     "fs-extra": "^9.0.1",
