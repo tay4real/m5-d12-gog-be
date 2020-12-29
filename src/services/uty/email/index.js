@@ -20,15 +20,13 @@ module.exports = async (emailAddress, attachment) => {
       from: `Ademuyiwa Otubusin <${process.env.SMTP_USER}>`, // sender address
       to: emailAddress, // list of receivers
       subject: "Testing Nodemailer", // Subject line
-      html: "<p>Your html here</p>", // plain text body
-      attachment: [
+      html: "<b>Find your Order details below</b>", // plain text body
+      attachments: [
         {
-          // encoded string as an attachment
+          content: myFile64, // file itself in the form of a base64 string
+          type: "plain/text",
           filename: "whatever.pdf",
-          content: myFile64,
-          encoding: "base64",
-
-          contentDisposition: "attachment",
+          disposition: "attachment",
         },
       ],
     };
