@@ -1,30 +1,20 @@
-const { SMTPClient } = require("emailjs");
+const emailjs = require("emailjs-com");
+const uniqid = require("uniqid");
 
 module.exports = async (emailAddress, attachment) => {
   try {
-    const client = new SMTPClient({
-      user: process.env.SMTP_USER,
-      password: process.env.SMTP_PASSWORD,
-      host: process.env.SMTP_HOST,
-      ssl: true,
-    });
-
-    const msg = {
-      to: emailAddress,
-      from: process.env.SENDER_EMAIL,
+    const template_id = uniqid();
+    const template_params = {
       subject: "Testing Email JS",
       text: "I hope this works",
-      attachments: [
-        { data: "<html>i <i>hope</i> this works!</html>", alternative: true },
-        {
-          path: "whatever.pdf",
-          type: "plain/text",
-          name: "renamed.pdf",
-        },
-      ],
     };
 
-    await client.send(msg);
+    await emailjs.send(
+      process.env.SERVICE_ID,
+      template_id,
+      template_params,
+      process.env.USER_ID
+    );
   } catch (error) {
     console.log(JSON.stringify(error));
   }
