@@ -25,7 +25,7 @@ module.exports = async (emailAddress, attachment) => {
         {
           content: myFile64, // file itself in the form of a base64 string
           contentType: "text/plain",
-          filename: "PlacementOrder.pdf",
+          filename: "PlacementOrder.txt",
           contentDisposition: "attachment",
         },
       ],
